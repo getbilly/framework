@@ -94,7 +94,7 @@ class Application extends Container
 
 			$this->loadWith($activator, [
 				'enqueue',
-                'action'
+                'loader'
 			]);
 		}
 
@@ -110,7 +110,7 @@ class Application extends Container
 
 			$this->loadWith($deactivator, [
 				'enqueue',
-                'action'
+                'loader'
 			]);
 		}
 	}
