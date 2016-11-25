@@ -26,7 +26,7 @@ class Loader
             throw new InvalidArgumentException("Missing {$key} definition for action");
         }
 
-		if (!in_array($data['type'], ['admin', 'public'])) {
+  		if (!in_array($data['type'], ['action', 'filter'])) {
             throw new InvalidArgumentException("Unknown action type '{$data['type']}'");
         }
 
@@ -44,16 +44,16 @@ class Loader
 
     public function filter($data, $type = null)
     {
-	    if (!is_null($type)) {
+	    if (is_null($type)) {
 			$data['type'] = 'filter';
 		}
 
         $this->add($data);
     }
 
-	public function action($action)
+	public function action($data, $type = null)
 	{
-	    if (!is_null($type)) {
+	    if (is_null($type)) {
 			$data['type'] = 'action';
 		}
 
