@@ -1,8 +1,8 @@
 {
 	"name": "getbilly/framework",
- 	"keywords": ["wordpress", "plugin", "orm", "eloquent", "sql", "framework"],
+    "description": "Baaa? Billy.",
+    "license": "MIT",
     "homepage": "https://github.com/getbilly/framework",
-    "version": "0.3.0 -b",
 	"authors": [
         {
             "name": "Jack Whiting",
