@@ -1,5 +1,5 @@
 {
-	"name": "billy/framework",
+	"name": "getbilly/framework",
  	"keywords": ["wordpress", "plugin", "orm", "eloquent", "sql", "framework"],
     "homepage": "https://github.com/getbilly/framework",
     "version": "0.3.0 -b",
