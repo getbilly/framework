@@ -1,7 +1,8 @@
 {
-	"name": "Billy Framework",
+	"name": "billy-framework",
  	"keywords": ["wordpress", "plugin", "orm", "eloquent", "sql", "framework"],
     "homepage": "https://github.com/getbilly/framework",
+    "version": "0.3.0 -b",
 	"authors": [
         {
             "name": "Jack Whiting",
