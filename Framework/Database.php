@@ -29,4 +29,12 @@ class Database
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
 	}
+
+    public static function instance() 
+    {
+        static $instance = false;
+        if ( ! $instance ) $instance = new self();
+        return $instance;
+    }
+
 }
