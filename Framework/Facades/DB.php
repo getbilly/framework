@@ -1,6 +1,6 @@
 <?php
 
-namespace Billy\Framework;
+namespace Billy\Framework\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use Billy\Framework\Database;
