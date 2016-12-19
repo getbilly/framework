@@ -46,29 +46,6 @@ if (!function_exists('plugin_url')) {
     }
 }
 
-if (!function_exists('base_directory')) {
-    /**
-     * Gets the base directory.
-     * @return string
-     */
-    function base_directory()
-    {
-        return JB_PLUGIN_PATH;
-    }
-}
-
-
-if (!function_exists('base_url')) {
-    /**
-     * Gets the plugin url.
-     * @return string
-     */
-    function base_url()
-    {
-        return JB_PLUGIN_URL;
-    }
-}
-
 if (!function_exists('errors')) {
     /**
      * Get the errors.
