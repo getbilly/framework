@@ -52,7 +52,8 @@ class Database implements ConnectionInterface
      *
      * @return \Illuminate\Database\Query\Builder
      */
-    public function table($table) {
+    public function table($table) 
+    {
         $processor = $this->getPostProcessor();
         $table = $this->db->prefix . $table;
         $query = new Builder( $this, $this->getQueryGrammar(), $processor );
@@ -65,7 +66,8 @@ class Database implements ConnectionInterface
      *
      * @return \Illuminate\Database\Query\Expression
      */
-    public function raw($value) {
+    public function raw($value) 
+    {
         return new Expression($value);
     }
     /**
@@ -76,7 +78,8 @@ class Database implements ConnectionInterface
      *
      * @return mixed
      */
-    public function selectOne( $query, $bindings = array() ) {
+    public function selectOne( $query, $bindings = array() ) 
+    {
         $query = $this->bind_params( $query, $bindings );
         return $this->db->get_row( $query );
     }
@@ -88,7 +91,8 @@ class Database implements ConnectionInterface
      *
      * @return array
      */
-    public function select( $query, $bindings = array() ) {
+    public function select( $query, $bindings = array() ) 
+    {
         $query = $this->bind_params( $query, $bindings );
         return $this->db->get_results( $query );
     }
@@ -100,7 +104,8 @@ class Database implements ConnectionInterface
      *
      * @return mixed
      */
-    private function bind_params( $query, $bindings, $update = false ) {
+    private function bind_params( $query, $bindings, $update = false ) 
+    {
         $query    = str_replace( '"', '`', $query );
         $bindings = $this->prepareBindings( $bindings );
         if ( ! $bindings ) {
@@ -118,6 +123,7 @@ class Database implements ConnectionInterface
         $query = vsprintf( $query, $bindings );
         return $query;
     }
+
     /**
      * Bind and run the query
      *
@@ -126,10 +132,12 @@ class Database implements ConnectionInterface
      *
      * @return array
      */
-    public function bind_and_run( $query, $bindings = array() ) {
+    public function bind_and_run( $query, $bindings = array() ) 
+    {
         $new_query = $this->bind_params( $query, $bindings );
         $this->db->query( $new_query );
     }
+
     /**
      * Run an insert statement against the database.
      *
@@ -138,9 +146,11 @@ class Database implements ConnectionInterface
      *
      * @return bool
      */
-    public function insert( $query, $bindings = array() ) {
+    public function insert( $query, $bindings = array() ) 
+    {
         return $this->statement($query, $bindings);
     }
+
     /**
      * Run an update statement against the database.
      *
@@ -149,9 +159,11 @@ class Database implements ConnectionInterface
      *
      * @return int
      */
-    public function update( $query, $bindings = array() ) {
+    public function update( $query, $bindings = array() ) 
+    {
         return $this->affectingStatement($query, $bindings);
     }
+
     /**
      * Run a delete statement against the database.
      *
@@ -160,9 +172,11 @@ class Database implements ConnectionInterface
      *
      * @return int
      */
-    public function delete( $query, $bindings = array() ) {
+    public function delete( $query, $bindings = array() ) 
+    {
         return $this->affectingStatement($query, $bindings);
     }
+
     /**
      * Execute an SQL statement and return the boolean result.
      *
@@ -171,7 +185,8 @@ class Database implements ConnectionInterface
      *
      * @return bool
      */
-    public function statement( $query, $bindings = array() ) {
+    public function statement( $query, $bindings = array() ) 
+    {
         $new_query = $this->bind_params( $query, $bindings, true );
         return $this->unprepared( $new_query );
     }
@@ -183,10 +198,12 @@ class Database implements ConnectionInterface
      *
      * @return int
      */
-    public function affectingStatement( $query, $bindings = array() ) {
+    public function affectingStatement( $query, $bindings = array() ) 
+    {
         $new_query = $this->bind_params( $query, $bindings, true );
         return intval($this->db->query( $new_query ));
     }
+
     /**
      * Run a raw, unprepared query against the PDO connection.
      *
@@ -194,9 +211,11 @@ class Database implements ConnectionInterface
      *
      * @return bool
      */
-    public function unprepared( $query ) {
+    public function unprepared( $query ) 
+    {
         return ( $this->db->query( $query ) !== false );
     }
+
     /**
      * Prepare the query bindings for execution.
      *
@@ -204,7 +223,8 @@ class Database implements ConnectionInterface
      *
      * @return array
      */
-    public function prepareBindings( array $bindings ) {
+    public function prepareBindings( array $bindings ) 
+    {
         $grammar = $this->getQueryGrammar();
         foreach ( $bindings as $key => $value ) {
             // Micro-optimization: check for scalar values before instances
@@ -223,35 +243,39 @@ class Database implements ConnectionInterface
         }
         return $bindings;
     }
+
     /**
      * Execute a Closure within a transaction.
      *
      * @param  \Closure $callback
-     *
      * @return mixed
-     *
      * @throws \Exception
      */
-    public function transaction( \Closure $callback ) {
+    public function transaction( \Closure $callback ) 
+    {
         // TODO: Implement transaction() method.
     }
+
     /**
      * Start a new database transaction.
      *
      * @return void
      */
-    public function beginTransaction() {
+    public function beginTransaction() 
+    {
         $transaction = $this->unprepared('START TRANSACTION;');
         if ($transaction) {
             $this->transactionCount++;
         }
     }
+
     /**
      * Commit the active database transaction.
      *
      * @return void
      */
-    public function commit() {
+    public function commit() 
+    {
         if ($this->transactionCount < 1) {
             return;
         }
@@ -260,12 +284,14 @@ class Database implements ConnectionInterface
             $this->transactionCount--;
         }
     }
+
     /**
      * Rollback the active database transaction.
      *
      * @return void
      */
-    public function rollBack() {
+    public function rollBack() 
+    {
         if ($this->transactionCount < 1) {
             return;
         }
@@ -274,14 +300,17 @@ class Database implements ConnectionInterface
             $this->transactionCount--;
         }
     }
+
     /**
      * Get the number of active transactions.
      *
      * @return int
      */
-    public function transactionLevel() {
+    public function transactionLevel() 
+    {
         return $this->transactionCount;
     }
+
     /**
      * Execute the given callback in "dry run" mode.
      *
@@ -289,31 +318,37 @@ class Database implements ConnectionInterface
      *
      * @return array
      */
-    public function pretend( \Closure $callback ) {
+    public function pretend( \Closure $callback ) 
+    {
         // TODO: Implement pretend() method.
     }
-    public function getPostProcessor() {
+
+    public function getPostProcessor() 
+    {
         return new Processor();
     }
-    public function getQueryGrammar() {
+
+    public function getQueryGrammar() 
+    {
         return new Grammar();
     }
+
     /**
      * Return self as PDO
-     *
-     * @return \WeDevs\ORM\Eloquent\Database
      */
-    public function getPdo() {
+    public function getPdo() 
+    {
         return $this;
     }
+
     /**
      * Return the last insert id
      *
      * @param  string  $args
-     *
      * @return int
      */
-    public function lastInsertId( $args ) {
+    public function lastInsertId( $args ) 
+    {
         return $this->db->insert_id;
     }
 
