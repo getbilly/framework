@@ -78,7 +78,7 @@ class Database implements ConnectionInterface
      *
      * @return mixed
      */
-    public function selectOne( $query, $bindings = array() ) 
+    public function selectOne($query, $bindings = array())
     {
         $query = $this->bind_params( $query, $bindings );
         return $this->db->get_row( $query );
@@ -91,7 +91,7 @@ class Database implements ConnectionInterface
      *
      * @return array
      */
-    public function select( $query, $bindings = array() ) 
+    public function select($query, $bindings = array())
     {
         $query = $this->bind_params( $query, $bindings );
         return $this->db->get_results( $query );
@@ -104,7 +104,7 @@ class Database implements ConnectionInterface
      *
      * @return mixed
      */
-    private function bind_params( $query, $bindings, $update = false ) 
+    private function bind_params($query, $bindings, $update = false)
     {
         $query    = str_replace( '"', '`', $query );
         $bindings = $this->prepareBindings( $bindings );
@@ -132,9 +132,9 @@ class Database implements ConnectionInterface
      *
      * @return array
      */
-    public function bind_and_run( $query, $bindings = array() ) 
+    public function bind_and_run($query, $bindings = array())
     {
-        $new_query = $this->bind_params( $query, $bindings );
+        $new_query = $this->bind_params($query, $bindings);
         $this->db->query( $new_query );
     }
 
@@ -146,7 +146,7 @@ class Database implements ConnectionInterface
      *
      * @return bool
      */
-    public function insert( $query, $bindings = array() ) 
+    public function insert($query, $bindings = array())
     {
         return $this->statement($query, $bindings);
     }
@@ -159,7 +159,7 @@ class Database implements ConnectionInterface
      *
      * @return int
      */
-    public function update( $query, $bindings = array() ) 
+    public function update($query, $bindings = array())
     {
         return $this->affectingStatement($query, $bindings);
     }
@@ -172,7 +172,7 @@ class Database implements ConnectionInterface
      *
      * @return int
      */
-    public function delete( $query, $bindings = array() ) 
+    public function delete($query, $bindings = array())
     {
         return $this->affectingStatement($query, $bindings);
     }
@@ -185,9 +185,9 @@ class Database implements ConnectionInterface
      *
      * @return bool
      */
-    public function statement( $query, $bindings = array() ) 
+    public function statement($query, $bindings = array())
     {
-        $new_query = $this->bind_params( $query, $bindings, true );
+        $new_query = $this->bind_params($query, $bindings, true);
         return $this->unprepared( $new_query );
     }
     /**
@@ -198,7 +198,7 @@ class Database implements ConnectionInterface
      *
      * @return int
      */
-    public function affectingStatement( $query, $bindings = array() ) 
+    public function affectingStatement($query, $bindings = array())
     {
         $new_query = $this->bind_params( $query, $bindings, true );
         return intval($this->db->query( $new_query ));
@@ -211,7 +211,7 @@ class Database implements ConnectionInterface
      *
      * @return bool
      */
-    public function unprepared( $query ) 
+    public function unprepared( $query)
     {
         return ( $this->db->query( $query ) !== false );
     }
