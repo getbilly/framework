@@ -13,6 +13,10 @@ if ( ! file_exists(__DIR__ . '/globals.php'))
 
 @require 'globals.php';
 
+if (array_search(ABSPATH . 'wp-admin/includes/plugin.php', get_included_files()) === false) {
+    require_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+
 $billy = new Billy\Framework\Application();
 
 /**
@@ -34,18 +38,21 @@ foreach ($iterator as $directory) {
     $plugin = substr($root . '/plugin.php', strlen(plugin_directory()));
     $plugin = ltrim($plugin, '/');
 
-	register_activation_hook($plugin, function () use ($billy, $config, $root)
+	register_activation_hook($plugin, function() use ($billy, $config, $root)
 	{
 		$billy->loadPlugin($config);
 		$billy->activatePlugin($root);
 	});
 
-	register_deactivation_hook($plugin, function () use ($billy, $root)
+	register_deactivation_hook($plugin, function() use ($billy, $root)
 	{
 		$billy->deactivatePlugin($root);
 	});
+
+    if ( ! is_plugin_active($plugin))
+        continue;
 	
- 	@require_once $root.'/plugin.php';
+ 	@require_once $root . '/plugin.php';
 
 	$billy->loadPlugin($config);
 }
