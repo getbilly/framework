@@ -251,7 +251,7 @@ class Database implements ConnectionInterface
      * @return mixed
      * @throws \Exception
      */
-    public function transaction( \Closure $callback ) 
+    public function transaction( \Closure $callback, $attempts = 1 )
     {
         // TODO: Implement transaction() method.
     }
