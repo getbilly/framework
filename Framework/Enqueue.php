@@ -42,10 +42,13 @@ class Enqueue {
 				return;
         }
 
+        if (!isset($attrs['uses']))
+            $attrs['uses'] = [];
+
         if (pathinfo($attrs['src'], PATHINFO_EXTENSION) === 'css') {
             wp_enqueue_style($attrs['as'], $attrs['src']);
         } else {
-            wp_enqueue_script($attrs['as'], $attrs['src'], [], false, $footer);
+            wp_enqueue_script($attrs['as'], $attrs['src'], $attrs['uses'], false, $footer);
 
             if(isset($attrs['localize'])) {
                 wp_localize_script($attrs['as'], $attrs['as'], $attrs['localize']);
